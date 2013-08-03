@@ -2,6 +2,6 @@
 RemoteSystemsTempFiles/
 *.class
 */.project
-.settings
+*/.settings/
 .classpath
 */bin/
