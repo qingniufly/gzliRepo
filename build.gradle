@@ -1,11 +1,138 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
+apply from: 'libraries.gradle'
 
-sourceCompatibility = 1.7
+group = 'com.simon'
 version = '1.0'
 
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'eclipse-wtp'
+	apply plugin: 'maven'
 
-repositories {
-	mavenCentral()
+	buildDir = 'target'
+	sourceCompatibility = '1.7'
+	targetCompatibility = '1.7'
+
+	repositories {
+	//	maven { url 'http://192.168.160.187:8081/nexus/content/groups/public' }
+		mavenCentral()
+		mavenLocal()
+	}
+	
+	configurations {
+		provided {
+			// TODO : need to make sure these are non-exported
+			description = 'Non-exported compile-time dependencies.'
+		}
+		configurations {
+			all*.exclude group: 'commons-logging', module: 'commons-logging'
+		}
+	}
+	
+	sourceSets.main.compileClasspath += configurations.provided
+	eclipse.classpath.plusConfigurations += configurations.provided
+	
+	sourceSets.main.java {
+		srcDir 'src/main/java'
+	}
+	
+	sourceSets.main.resources {
+		if (project.hasProperty('profile')) {
+			srcDir 'src/main/resources-' + project.profile
+		}
+	}
+	
+	sourceSets.test.java {
+		srcDir 'src/test/java'
+	}
+	
+	sourceSets.test.resources {
+		if (project.hasProperty('profile')) {
+			srcDir 'src/test/resources-' + project.profile
+		}
+	}
+	
+	tasks.withType(Compile) { options.encoding = 'UTF-8' }
+	
+	eclipseProject.doLast {
+		if ( !new File("$projectDir/src").exists() 
+				&& ! new File("$projectDir/gen-java").exists()) {
+			ant.delete dir: '.settings'
+			ant.delete file: '.project'
+			ant.delete file: '.classpath'
+		}
+	}
+	
+	task 'create-dirs' << {
+		sourceSets*.java.srcDirs*.each { it.mkdirs() }
+		sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+	}
+	
+	task zip(type: Zip) {
+		from ('script') { into('bin') }
+		from ('src/main/resources') { into 'conf' }
+		if (project.hasProperty('profile')) {
+			from ('src/main/resources-' + project.profile) { into('conf') }
+		}
+		into('lib') {
+			from ('lib')
+			from (jar.outputs.files)
+			from (configurations.compile)
+		}
+	}
+	zip.doFirst {
+		if (new File("$projectDir/script").exists()) {
+			classpath = new File("$projectDir/script/.classpath")
+			if (!classpath.exists()) {
+				classpath.createNewFile()
+			}
+			cp = 'CLASSPATH='
+			for (file in new File("$projectDir/lib").listFiles()) {
+				cp += '../lib/' + file.name + ';'
+			}
+			for (file in configurations.compile) {
+				cp += '../lib/' + file.name + ';'
+			}
+			for (file in jar.outputs.files) {
+				cp += '../lib/' + file.name + ';'
+			}
+			classpath.text = cp.substring(0, cp.length() - 1)
+		}
+	}
+	
+	task sourcesJar(type: Jar, dependsOn:classes) {
+		classifier = 'sources'
+		from sourceSets.main.allSource
+	}
+	
+	task javadocJar(type: Jar, dependsOn:javadoc) {
+		classifier = 'javadoc'
+		from javadoc.destinationDir
+	}
+	
+	artifacts {
+		archives sourcesJar
+		archives javadocJar
+	}
+	
+	// 编译Groovy代码时采用 MacRoman
+	tasks.withType(GroovyCompile) {
+		groovyOptions.encoding = 'MacRoman'
+	}
+	
+	// 编译JavaDoc文件时采用 UTF-8
+	tasks.withType(Javadoc) {
+		options.encoding = 'UTF-8'
+	}
+	
+	// 编译Java文件时采用 UTF-8
+	tasks.withType(Compile) {
+		options.encoding = 'UTF-8'
+	}
+	
+	[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+	
 }
+
+
 
