@@ -1,3 +1,4 @@
+.gradle/
 .metadata/
 RemoteSystemsTempFiles/
 *.class
