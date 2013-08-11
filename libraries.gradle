@@ -193,6 +193,9 @@ libraries = [
 	quartz:					'org.quartz-scheduler:quartz:2.1.7',
 
 	/* R */
+	
+	//RabbitMQ
+	rabbitmq:				'com.rabbitmq:amqp-client:3.1.4',
 
 	// reflections
 	reflections:			'org.reflections:reflections:0.9.8',
