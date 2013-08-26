@@ -2,6 +2,7 @@
 .metadata/
 RemoteSystemsTempFiles/
 Servers/
+target/
 *.class
 */.project
 */.settings/
