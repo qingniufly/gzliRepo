@@ -53,6 +53,9 @@ libraries = [
 	groovy_console:			"org.codehaus.groovy:groovy-console:${versions.groovy}",
 	groovy_jsr223:			"org.codehaus.groovy:groovy-jsr223:${versions.groovy}",
 	
+	// gson
+	gson:				"com.google.code.gson:gson:2.2.4",
+	
 	/* H */
 
 	// hadoop
@@ -83,6 +86,9 @@ libraries = [
 
 	// javacsv
 	javacsv:				'net.sourceforge.javacsv:javacsv:2.0',
+
+	//javaee-api
+	javaee_api:				'javax:javaee-api:6.0',
 
 	// javassist
 	javassist:				'org.javassist:javassist:3.17.1-GA',
@@ -209,7 +215,7 @@ libraries = [
 	/* S */
 
 	// servlet api
-	servlet_api:			'javax.servlet:servlet-api:2.5',
+	servlet_api:			'javax.servlet:javax.servlet-api:3.1.0',
 
 	// simple xml
 	simple_xml:				'org.simpleframework:simple-xml:2.7',

@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Servlet3.0 jQuery-Stream</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
+<!-- <script type="text/javascript" src="js/jquery.stream-1.2.min.js"></script> -->
+<script type="text/javascript" src="js/jquery.stream-1.2.js"></script>
+<script type="text/javascript">
+
+	$.stream.setup({
+		enableXDR : true
+	});
+	var chat = {
+		lastUsername : "Simon",
+		username : $.trim(window.prompt("Username is ?")) || "Anonymous"
+				+ $(window).width()
+	};
+	$(function() {
+		$.stream("chat", {
+			type : "http",
+			dataType : "json",
+			context : $("#content")[0],
+			open : function(event, stream) {
+				stream.send({username : chat.username});
+			},
+			message : function(event) {
+// 				alert("message");
+				$("#contextId").val(event.data.contextId);
+			},
+			error : function() {
+// 				alert("error");
+			},
+			close : function() {
+// 				alert("close");
+			}
+		});
+
+	});
+</script>
+</head>
+<body>
+
+	<div id="content">
+		<input id="contextId" type="text" style="width:500px" name="" value="" />
+	</div>
+
+</body>
+</html>

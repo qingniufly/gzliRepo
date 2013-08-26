@@ -1,0 +1,7 @@
+apply plugin: 'war'
+
+dependencies {
+	compile libraries.gson
+//	compile libraries.javaee_api
+	compile libraries.servlet_api
+}

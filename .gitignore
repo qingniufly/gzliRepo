@@ -1,6 +1,7 @@
 .gradle/
 .metadata/
 RemoteSystemsTempFiles/
+Servers/
 *.class
 */.project
 */.settings/
