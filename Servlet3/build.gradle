@@ -1,7 +1,9 @@
 apply plugin: 'war'
 
 dependencies {
+	compile libraries.slf4j_api
 	compile libraries.gson
-//	compile libraries.javaee_api
 	compile libraries.servlet_api
+	compile libraries.json_lib
+	compile libraries.commons_lang
 }
