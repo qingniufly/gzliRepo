@@ -1,0 +1,7 @@
+
+dependencies {
+	compile libraries.slf4j_api
+	compile libraries.commons_logging
+	compile libraries.commons_httpclient
+	compile libraries.htmlparser
+}
