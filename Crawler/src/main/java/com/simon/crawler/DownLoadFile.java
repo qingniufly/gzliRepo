@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Writer;
-import java.nio.charset.Charset;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
@@ -56,6 +55,7 @@ public class DownLoadFile {
 	private void saveToLocal(String str, String filePath) {
 		try {
 			Writer writer = new FileWriter(new File(filePath));
+//			writer.write(str.getBytes(Charset.forName("GB2312")));
 			writer.write(str);
 			writer.flush();
 			writer.close();
@@ -96,7 +96,8 @@ public class DownLoadFile {
 			StringBuffer stringBuffer = new StringBuffer();
 			String str = "";
 			while((str = reader.readLine())!=null){
-				stringBuffer.append(str.getBytes(Charset.forName("GB2312")));
+//				stringBuffer.append(str.getBytes(Charset.forName("GB2312")));
+				stringBuffer.append(str);
 			}
 			String responseStr = stringBuffer.toString();
 
