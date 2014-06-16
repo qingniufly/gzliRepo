@@ -226,6 +226,7 @@ libraries = [
 	snakeyaml:				'org.yaml:snakeyaml:1.12',
 
 	// spring
+	spring_core:			"org.springframework:spring-core:${versions.spring}",
 	spring_agent:			'org.springframework:spring-agent:2.5.6',
 	spring_aspects:			"org.springframework:spring-aspects:${versions.spring}",
 	spring_context:			"org.springframework:spring-context:${versions.spring}",

@@ -24,9 +24,9 @@ allprojects {
 			// TODO : need to make sure these are non-exported
 			description = 'Non-exported compile-time dependencies.'
 		}
-//		configurations {
-//			all*.exclude group: 'commons-logging', module: 'commons-logging'
-//		}
+		configurations {
+			all*.exclude group: 'commons-logging', module: 'commons-logging'
+		}
 	}
 	
 	sourceSets.main.compileClasspath += configurations.provided
