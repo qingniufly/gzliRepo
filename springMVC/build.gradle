@@ -1,0 +1,86 @@
+version = '1.0'
+archivesBaseName = 'springMVC'
+buildDir = 'target'
+
+apply plugin : 'maven'
+apply plugin : 'eclipse-wtp'
+apply plugin: 'war'
+
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+repositories {
+	maven {url 'http://192.168.160.187:8081/nexus/content/groups/public'}
+	mavenCentral()
+	mavenLocal()
+}
+
+eclipse {
+	classpath {
+		downloadSources = true
+	}
+}
+
+configurations {
+	provided {
+		// todo : need to make sure these are non-exported
+		description = 'Non-exported compile-time dependencies.'
+	}
+	configurations {
+		all*.exclude group : 'commons-logging', module : 'commons-logging'
+	}
+}
+
+sourceSets.main.compileClasspath += configurations.provided
+eclipse.classpath.plusConfigurations += configurations.provided
+
+sourceSets.main.resources {
+	if (project.hasProperty('profile')) {
+		srcDir 'src/main/resources-' + project.profile
+	}
+}
+
+
+eclipseProject.doLast {
+	if (! new File('$projectDir/src').exists() && ! new File('$projectDir/gen-java').exists()) {
+		ant.delete dir : '.settings'
+		ant.delete dir : '.project'
+		ant.delete dir : '.classpath'
+	}
+}
+
+
+tasks.withType(GroovyCompile) {
+	groovyOptions.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+	options.encoding = 'UTF-8'
+}
+
+tasks.withType(Compile) {
+	options.encoding = 'UTF-8'
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+dependencies {
+	//testCompile libraries.junit
+	compile 'junit:junit:4.11'
+	compile 'org.springframework:spring-webmvc:3.1.4.RELEASE'
+	compile 'org.springframework:spring-test:3.1.4.RELEASE'
+	compile 'org.springframework:spring-jdbc:3.1.4.RELEASE'
+	compile 'org.aspectj:aspectjweaver:1.8.1'
+	compile 'mysql:mysql-connector-java:5.1.24'
+	compile 'org.apache.commons:commons-dbcp2:2.0.1'
+	compile 'org.slf4j:jcl-over-slf4j:1.7.5'
+	compile 'ch.qos.logback:logback-classic:1.0.13'
+	compile 'joda-time:joda-time:2.2'
+	compile 'javax.servlet:javax.servlet-api:3.1.0'
+	compile 'org.freemarker:freemarker:2.3.19'
+	compile 'com.github.jmkgreen.morphia:morphia-validation:1.2.3'
+	//compile 'javax.validation:validation-api:1.0.0.GA'
+	compile 'org.hibernate:hibernate-validator:4.1.0.Final'
+	compile 'com.github.jmkgreen.morphia:morphia-logging-slf4j:1.2.3'
+}

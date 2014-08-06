@@ -1,0 +1,173 @@
+apply plugin : 'java-library-distribution'
+//import org.apache.tools.ant.filters.*
+
+group = 'com.travelzen'
+version = '1.0'
+
+archivesBaseName = 'lucene-xxx-demo'
+
+buildDir = 'target'
+
+apply plugin : 'java'
+apply plugin : 'maven'
+apply plugin : 'eclipse-wtp'
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+repositories {
+	maven {url 'http://192.168.160.187:8081/nexus/content/groups/public'}
+	mavenCentral()
+	mavenLocal()
+}
+
+eclipse {
+	classpath {
+		downloadSources = true
+	}
+}
+
+configurations {
+	provided {
+		// todo : need to make sure these are non-exported
+		description = 'Non-exported compile-time dependencies.'
+	}
+	configurations {
+		all*.exclude group : 'commons-logging', module : 'commons-logging'
+		all*.exclude module: 'log4j-over-slf4j'
+		all*.exclude module: 'slf4j-log4j12'
+	}
+}
+
+sourceSets.main.compileClasspath += configurations.provided
+eclipse.classpath.plusConfigurations += configurations.provided
+
+sourceSets.main.resources {
+	if (project.hasProperty('profile')) {
+		srcDir 'src/main/resources-' + project.profile
+	}
+}
+
+
+eclipseProject.doLast {
+	if (! new File('$projectDir/src').exists() && ! new File('$projectDir/gen-java').exists()) {
+		ant.delete dir : '.settings'
+		ant.delete dir : '.project'
+		ant.delete dir : '.classpath'
+	}
+}
+
+artifacts {
+	archives sourcesJar
+	archives javadocJar
+}
+
+tasks.withType(GroovyCompile) {
+	groovyOptions.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+	options.encoding = 'UTF-8'
+}
+
+tasks.withType(Compile) {
+	options.encoding = 'UTF-8'
+}
+
+task cleanExtraBin(type: Delete) {
+	delete 'src/main/bin/'
+}
+
+task cleanExtraConfig(type: Delete) {
+	delete 'src/main/config'
+}
+
+clean.dependsOn(cleanExtraBin,cleanExtraConfig)
+
+task filterAndMoveBin(type: Copy, dependsOn: cleanExtraBin) {
+	//移动配置文件*.sh文件到bin文件夹
+	from('src/main/template') {
+		include '**/*.sh'
+	/*
+	 *	def myProps = new Properties()
+	 *	if (!project.hasProperty("profile")) {
+	 *		file("src/main/filter/test-dev.properties").withInputStream{
+	 *			myProps.load(it);
+	 *		}
+	 *	} else {
+	 *		def filePath = "${rootProject.projectDir}/b2g/b2g-autocomplete/src/main/filter/test-${profile}.properties"
+	 *		def file = new File(filePath)
+	 *		if(!file.exists()) {
+	 *			return
+	 *		}
+	 *		new File(filePath).withInputStream{
+	 *			myProps.load(it);
+	 *		}
+	 *	}
+	 *	filter(ReplaceTokens, tokens: myProps)
+		*/
+	}
+	into('src/main/bin')
+}
+
+distributions {
+	main {
+		contents {
+			from('src/main/') {
+				include 'bin/*'
+				include 'config/**'
+			}
+		}
+	}
+}
+
+jar {
+	baseName =  'lucene-demo'
+	manifest {
+		attributes (
+			"Manifest-Version"       : version,
+			"Created-By"             : "Gradle 1.10",
+			"Implementation-Title"   : "Test",
+			"Implementation-Version" : version,
+			"Main-Class": "com.simon.main.Main",
+		)
+		def manifestClasspath = configurations.runtime.collect { File file = it
+		"lib/${file.name}" }.join(' ')
+		attributes 'Class-Path': manifestClasspath
+		attributes 'Build-At': new Date()
+	}
+}
+
+distZip.dependsOn 'clean','filterAndMoveBin'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+dependencies {
+	compile 'org.apache.lucene:lucene-core:4.6.0'
+	compile 'org.apache.lucene:lucene-analyzers-common:4.6.0'
+	compile 'org.apache.lucene:lucene-queryparser:4.6.0'
+	compile 'org.apache.lucene:lucene-facet:4.6.0'
+	compile 'joda-time:joda-time:2.2'
+	testCompile 'org.apache.lucene:lucene-test-framework:4.6.0'
+	compile 'javax.servlet:javax.servlet-api:3.0.1'
+	compile 'org.mockito:mockito-all:1.9.5'
+	compile 'io.netty:netty-all:4.1.0.Beta1'
+
+	// zookeeper
+	compile 'org.apache.zookeeper:zookeeper:3.4.6'
+	// zookeeper
+
+	// curator
+	compile 'org.apache.curator:curator-recipes:2.5.0'
+	// curator
+
+	// guava
+	compile 'com.google.guava:guava:17.0'
+	// guava
+
+	compile 'ch.qos.logback:logback-classic:1.0.13'
+
+	compile 'org.codehaus.groovy:groovy-all:2.2.1'
+
+}
+

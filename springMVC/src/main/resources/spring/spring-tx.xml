@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+	<context:property-placeholder location="classpath:properties/jdbc.properties" ignore-unresolvable="true"/>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="maxIdle" value="${jdbc.maxIdle}"/>
+		<property name="maxConnLifetimeMillis" value="${jdbc.maxConnLifetimeMillis}"/>
+		<property name="maxWaitMillis" value="${jdbc.maxWaitMillis}"/>
+		<property name="minIdle" value="${jdbc.minIdle}"/>
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+<!-- 配置方式1 start -->
+<!-- 	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor"> -->
+<!-- 		<property name="transactionManager" ref="transactionManager" /> -->
+<!-- 		<property name="transactionAttributes"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="*">PROPAGATION_REQUIRED, -Exception</prop> -->
+<!-- 				<prop key="get*">PROPAGATION_REQUIRED, readOnly</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="proxyStudentDao" class="org.springframework.aop.framework.ProxyFactoryBean"> -->
+<!-- 		<property name="target" ref="studentDaoTarget"/> -->
+<!-- 		<property name="interceptorNames"> -->
+<!-- 			<list> -->
+<!-- 				<value>transactionInterceptor</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+<!-- 配置方式1 end -->
+
+
+<!-- 配置方式2 start -->
+<!-- 	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor"> -->
+<!-- 		<property name="transactionManager" ref="transactionManager" /> -->
+<!-- 		<property name="transactionAttributes"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="*">PROPAGATION_REQUIRED, -Exception</prop> -->
+<!-- 				<prop key="get*">PROPAGATION_REQUIRED, readOnly</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="transactionProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator"> -->
+<!-- 		<property name="beanNames" value="*Dao*"/> -->
+<!-- 		<property name="interceptorNames"> -->
+<!-- 			<list> -->
+<!-- 				<value>transactionInterceptor</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+<!-- 配置方式2 end -->
+
+
+
+
+<!-- 	<bean class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor"> -->
+<!-- 		<property name="transactionInterceptor" ref="transactionInterceptor"/> -->
+<!-- 	</bean> -->
+
+
+
+<!-- 配置方式3 start -->
+<!-- 	<bean id="proxyStudentDao" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"> -->
+<!-- 		<property name="target" ref="studentDaoTarget" /> -->
+<!-- 		<property name="transactionManager" ref="transactionManager" /> -->
+<!-- 		<property name="transactionAttributes"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="*">PROPAGATION_REQUIRED, -Exception</prop> -->
+<!-- 				<prop key="get*">PROPAGATION_REQUIRED, readOnly</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+<!-- 配置方式3 end -->
+
+
+<!-- 配置方式4 start -->
+<!-- 	<tx:advice id="studentAdvice" transaction-manager="transactionManager"> -->
+<!-- 		<tx:attributes> -->
+<!-- 			<tx:method name="transfer" propagation="REQUIRED"/> -->
+<!-- 		</tx:attributes> -->
+<!-- 	</tx:advice> -->
+
+<!-- 	<aop:config> -->
+<!-- 		<aop:pointcut id="studentPointcut" expression="execution(*  com.simon.springmvc.dao.StudentDao.*(..))"/> -->
+<!-- 		<aop:advisor advice-ref="studentAdvice" pointcut-ref="studentPointcut"/> -->
+<!-- 	</aop:config> -->
+<!-- 配置方式4 end -->
+
+
+	<context:component-scan base-package="com.simon.springmvc.dao"/>
+
+</beans>
