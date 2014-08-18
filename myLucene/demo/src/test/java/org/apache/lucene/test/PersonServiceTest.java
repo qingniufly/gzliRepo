@@ -1,4 +1,4 @@
-package org.apache.lucene.demo;
+package org.apache.lucene.test;
 
 import org.junit.Before;
 import org.junit.Test;
