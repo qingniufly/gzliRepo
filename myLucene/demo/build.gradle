@@ -32,8 +32,8 @@ dependencies {
 
 }
 
+archivesBaseName =  'lucene-demo'
 jar {
-	baseName =  'lucene-demo'
 	manifest {
 		attributes (
 			"Manifest-Version"       : version,
