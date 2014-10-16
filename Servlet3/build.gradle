@@ -2,6 +2,9 @@ apply plugin: 'war'
 
 dependencies {
 	compile libraries.slf4j_api
+	compile libraries.jcl_over_slf4j
+//	compile libraries.slf4j_nop
+	compile libraries.logback
 	compile libraries.gson
 	compile libraries.servlet_api
 	compile libraries.json_lib
