@@ -4,16 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class SimpleClassLoader extends ClassLoader {
-	
+
 	private String[] dirs;
-	
+
 	public SimpleClassLoader(String path) {
 		dirs = path.split(System.getProperty("path.separator"));
 		String[] _dirs = dirs.clone();
 		for (String dir : _dirs) {
-//			extendClasspath(dir);
+			// extendClasspath(dir);
 			getParentClasspath(dir);
 		}
 	}
@@ -30,7 +32,7 @@ public class SimpleClassLoader extends ClassLoader {
 		System.arraycopy(exDirs, 0, newDirs, dirs.length, exDirs.length);
 		dirs = newDirs;
 	}
-	
+
 	private void getParentClasspath(String path) {
 		String[] segments = path.split(File.separator);
 		int size = path.startsWith(File.separator) ? segments.length : segments.length - 1;
@@ -48,7 +50,7 @@ public class SimpleClassLoader extends ClassLoader {
 		System.arraycopy(dirs, 0, newDirs, exDirs.length, dirs.length);
 		dirs = newDirs;
 	}
-	
+
 	private String popd(String[] pathSegments, int level) {
 		StringBuffer path = new StringBuffer();
 		for (int i = 0; i < level; i++) {
@@ -62,13 +64,13 @@ public class SimpleClassLoader extends ClassLoader {
 		for (String dir : dirs) {
 			byte[] buff = getClassData(dir, name);
 			if (buff != null) {
-				System.out.printf("load class[%s] from dir[$s]\n", name, dir);
+				System.out.printf("load class[%s] from dir[%s]\n", name, dir);
 				return defineClass(name, buff, 0, buff.length);
 			}
 		}
 		throw new ClassNotFoundException();
 	}
-	
+
 	private byte[] getClassData(String dir, String name) {
 		String[] tokens = name.split("\\.");
 		String classFile = dir + File.separatorChar + tokens[tokens.length - 1] + ".class";
@@ -87,13 +89,20 @@ public class SimpleClassLoader extends ClassLoader {
 		return buf;
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException {
-//		String path = "/usr/local/data/";
-//		System.out.println(path.substring(0, path.length() - 1));
-//		System.out.println(Arrays.deepToString(new SimpleClassLoader("/usr/local/data/").dirs));
-		
-		ClassLoader loader = new SimpleClassLoader("target/classes/com/simon/classloader");
-		loader.loadClass("SimpleClassLoader");
+	public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+			IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
+		// String path = "/usr/local/data/";
+		// System.out.println(path.substring(0, path.length() - 1));
+		// System.out.println(Arrays.deepToString(new
+		// SimpleClassLoader("/usr/local/data/").dirs));
+
+		ClassLoader loader = new SimpleClassLoader("/home/simon/Test/target/classes/main/com/simon/classloader/impl/");
+		Class<?> cls = loader.loadClass("com.simon.classloader.impl.ProductImpl");
+		System.out.println(cls.getClassLoader());
+		Method method = cls.getMethod("show");
+		Object obj = cls.newInstance();
+		method.invoke(obj);
+
 	}
-	
+
 }

@@ -8,7 +8,12 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-
+/**
+ * this util is used for resolve problem:
+ * illegal character: \65279
+ * @author simon
+ *
+ */
 public class ClearBom {
 	
 	public static boolean isBomFile(File file) {
