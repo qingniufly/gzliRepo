@@ -1,5 +1,23 @@
+apply plugin: 'maven'
 
 dependencies {
+	compile libraries.jcl_over_slf4j
+	compile libraries.slf4j_nop
+//	compile libraries.logback
 	compile libraries.slf4j_api
 	compile libraries.joda_time
+	compile libraries.spring_context
+	compile (libraries.spring_batch_core) {
+		exclude group: 'com.thoughtworks', module:'xstream'
+		exclude group: 'org.springframework', module:'spring-tx'
+	}
 }
+
+configure(install.repositories.mavenInstaller) {
+    pom.project {
+        groupId 'com.simon'
+		artifactId 'test'
+		version '0.1.0'
+   }.writeTo('pom.xml')
+}
+

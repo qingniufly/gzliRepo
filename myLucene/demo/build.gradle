@@ -34,8 +34,8 @@ configurations {
 	}
 	configurations {
 		all*.exclude group : 'commons-logging', module : 'commons-logging'
-		all*.exclude module: 'log4j-over-slf4j'
-		all*.exclude module: 'slf4j-log4j12'
+		all*.exclude group : 'org.slf4j', module: 'log4j-over-slf4j'
+		all*.exclude group : 'org.slf4j', module: 'slf4j-log4j12'
 	}
 }
 

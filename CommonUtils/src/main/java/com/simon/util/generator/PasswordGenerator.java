@@ -1,4 +1,4 @@
-﻿package com.simon.util.generator;
+package com.simon.util.generator;
 /**
  * author: Simon Lee
  * Date  : Jul 13, 2013

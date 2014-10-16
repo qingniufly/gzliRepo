@@ -9,7 +9,7 @@ import java.util.Set;
 import org.joda.time.DateTime;
 
 /**
- * @Author  : simon
+ * @author  : simon
  * @version : Aug 12, 2014 10:21:30 AM
  *
  **/
