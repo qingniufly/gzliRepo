@@ -2,8 +2,8 @@ apply plugin: 'maven'
 
 dependencies {
 	compile libraries.jcl_over_slf4j
-	compile libraries.slf4j_nop
-//	compile libraries.logback
+//	compile libraries.slf4j_nop
+	compile libraries.logback
 	compile libraries.slf4j_api
 	compile libraries.joda_time
 	compile libraries.spring_context
