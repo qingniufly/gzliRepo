@@ -117,6 +117,8 @@ libraries = [
 	// jmagick
 	jmagick:				'jmagick:jmagick:6.6.9',
 
+	// JMeter
+	jmeter_java:				'org.apache.jmeter:ApacheJMeter_java:2.11',
 	// joda
 	joda_time:				'joda-time:joda-time:2.2',
 

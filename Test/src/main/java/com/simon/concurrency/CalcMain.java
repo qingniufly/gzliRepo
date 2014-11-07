@@ -60,4 +60,42 @@ public class CalcMain {
 		}
 
 	}
+	
+	
+	/*
+	 * 
+		stupid
+		Counter result:99759758
+		Time elapsed(ms):343
+		Counter result:9964128
+		Time elapsed(ms):312
+		
+		
+		sync
+		Counter result:100000000
+		Time elapsed(ms):5688
+		Counter result:10000000
+		Time elapsed(ms):608
+		
+		
+		lock
+		Counter result:100000000
+		Time elapsed(ms):3627
+		Counter result:10000000
+		Time elapsed(ms):655
+		
+		
+		atomic
+		Counter result:100000000
+		Time elapsed(ms):7271
+		Counter result:10000000
+		Time elapsed(ms):883
+		
+		
+		cas
+		Counter result:100000000
+		Time elapsed(ms):9411
+		Counter result:10000000
+		Time elapsed(ms):963
+	 */
 }
