@@ -1,5 +1,6 @@
 apply plugin : 'java'
 apply plugin : 'eclipse'
+apply plugin: 'java-library-distribution'
 
 group = 'com.simon'
 version = '1.0'
@@ -33,20 +34,25 @@ dependencies {
 }
 
 archivesBaseName =  'lucene-demo'
-jar {
-	manifest {
-		attributes (
-			"Manifest-Version"       : version,
-			"Created-By"             : "Gradle 1.12",
-			"Implementation-Title"   : "demo",
-			"Implementation-Version" : version,
-			"Main-Class": "com.simon.main.Main",
-		)
-		def manifestClasspath = configurations.runtime.collect { File file = it
-		"lib/${file.name}"
-		}.join(' ')
-		attributes 'Class-Path': manifestClasspath
-		attributes 'Build-At': new Date()
+
+distributions.main.contents {
+	from('src/main/') {
+		include 'libs/*'
 	}
+}
+
+jar.manifest {
+	attributes (
+		"Manifest-Version"       : version,
+		"Created-By"             : "Gradle 1.12",
+		"Implementation-Title"   : "demo",
+		"Implementation-Version" : version,
+		"Main-Class": "com.simon.main.Main",
+	)
+	def manifestClasspath = configurations.runtime.collect { File file = it
+	"lib/${file.name}"
+	}.join(' ')
+	attributes 'Class-Path': manifestClasspath
+	attributes 'Build-At': new Date()
 }
 

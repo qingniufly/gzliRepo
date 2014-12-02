@@ -18,6 +18,12 @@ allprojects {
 		mavenCentral()
 		mavenLocal()
 	}
+
+	eclipse {
+		classpath {
+			downloadSources=true
+		}
+	}
 	
 	configurations {
 		provided {
