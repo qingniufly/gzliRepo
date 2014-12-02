@@ -16,14 +16,15 @@ dependencies {
 	compile ('org.seleniumhq.selenium:selenium-firefox-driver:2.44.0') {
 		exclude group:'org.seleniumhq.selenium', module:'selenium-remote-driver'
 	}
-	
+
+	compile 'org.apache.curator:curator-recipes:2.5.0'
 }
 
 configure(install.repositories.mavenInstaller) {
-    pom.project {
-        groupId 'com.simon'
+	pom.project {
+		groupId 'com.simon'
 		artifactId 'test'
 		version '0.1.0'
-   }.writeTo('pom.xml')
+}.writeTo('pom.xml')
 }
 
