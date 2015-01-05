@@ -1,0 +1,12 @@
+apply plugin: 'war'
+
+dependencies {
+	compile project(':DubboInterface')
+    compile libraries.dubbo
+    compile ('com.github.sgroschupf:zkclient:0.1') {
+    	exclude group:'org.apache.zookeeper', module:'zookeeper'
+    }
+    compile libraries.zookeeper
+	compile libraries.jcl_over_slf4j
+	compile libraries.logback
+}

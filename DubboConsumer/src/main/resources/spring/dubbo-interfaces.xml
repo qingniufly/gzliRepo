@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans     	http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--     <bean class="com.travelzen.framework.config.tops.TzPropertyPlaceholderConfigurer"> -->
+<!--         <property name="tzProperties"> -->
+<!--             <list> -->
+<!--                 <value>R:properties/finance-tfc-dubbo.properties</value> -->
+<!--             </list> -->
+<!--         </property> -->
+<!--     </bean> -->
+	<!-- 公共信息，也可以用dubbo.properties配置 -->
+	<dubbo:application name="dubbo-demo-consumer" />
+    <!-- 使用zookeeper广播注册中心暴露服务地址 -->
+<!--     <dubbo:registry address="${tfc.dubbo.zkurl}" /> -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+ 	
+ 	<dubbo:consumer check="false" timeout="60000" retries="0"/>
+ 
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+<!--     <dubbo:protocol name="dubbo" port="20880"/> -->
+
+	<!-- 扫描注解包路径，多个包用逗号分隔，不填package表示扫描当前ApplicationContext中所有的类 -->
+<!-- 	<dubbo:annotation package="com.travelzen.tfc.base.service.fin,com.travelzen.tfc.service,com.travelzen.tfc.credit.service"/> -->
+
+    <!--需要暴露的service-->
+<!--     <dubbo:service interface="com.travelzen.tfc.fin.api.FinBpProductAttrService" ref="finBpProductAttrServiceImpl" /> -->
+    <dubbo:reference id="userService" interface="com.simon.dubbo.api.IUserService" />
+    
+</beans>

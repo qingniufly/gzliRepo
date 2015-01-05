@@ -1,0 +1,14 @@
+dependencies {
+
+	compile project(':DubboInterface')
+	compile libraries.dubbo
+	compile libraries.junit
+	compile libraries.spring_test
+	compile libraries.jcl_over_slf4j
+	compile libraries.logback
+	compile ('com.github.sgroschupf:zkclient:0.1') {
+    	exclude group:'org.apache.zookeeper', module:'zookeeper'
+    }
+    compile libraries.zookeeper
+	
+}
