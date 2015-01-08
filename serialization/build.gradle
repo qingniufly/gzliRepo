@@ -1,0 +1,4 @@
+dependencies {
+	compile libraries.avro
+	compile libraries.avro_tools
+}

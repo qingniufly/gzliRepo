@@ -16,6 +16,9 @@ libraries = [
 	// ant
 	ant:				'org.apache.ant:ant:1.9.0',
 	
+	// apache avro
+	avro:				'org.apache.avro:avro:1.7.7',
+	avro_tools:			'org.apache.avro:avro-tools:1.7.7',
 	/* C */
 	
 	// commons:

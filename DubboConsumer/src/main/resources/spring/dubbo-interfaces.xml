@@ -18,6 +18,8 @@
 <!--     <dubbo:registry address="${tfc.dubbo.zkurl}" /> -->
     <dubbo:registry address="zookeeper://127.0.0.1:2181" />
  	
+ 	 <dubbo:monitor protocol="registry" address="192.168.163.87:7070"/>
+ 	
  	<dubbo:consumer check="false" timeout="60000" retries="0"/>
  
     <!-- 用dubbo协议在20880端口暴露服务 -->

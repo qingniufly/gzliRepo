@@ -17,17 +17,19 @@
     <!-- 使用zookeeper广播注册中心暴露服务地址 -->
 <!--     <dubbo:registry address="${tfc.dubbo.zkurl}" /> -->
     <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+    
+    <dubbo:monitor protocol="registry" address="192.168.163.87:7070"/>
  
     <!-- 用dubbo协议在20880端口暴露服务 -->
 <!--     <dubbo:protocol name="dubbo" port="${tfc.dubbo.fin.port}" serialization="compareKryo"/> -->
-    <dubbo:protocol name="dubbo" port="20880" serialization="kryo" contextpath="dubbodemo"/>
+    <dubbo:protocol name="dubbo" port="20880" serialization="kryo" contextpath="dubbodemo" accesslog="/tmp/dubbo.access.log"/>
 
 	<!-- 扫描注解包路径，多个包用逗号分隔，不填package表示扫描当前ApplicationContext中所有的类 -->
 <!-- 	<dubbo:annotation package="com.travelzen.tfc.base.service.fin,com.travelzen.tfc.service,com.travelzen.tfc.credit.service"/> -->
 
     <!--需要暴露的service-->
 <!--     <dubbo:service interface="com.travelzen.tfc.fin.api.FinBpProductAttrService" ref="finBpProductAttrServiceImpl" /> -->
-    <dubbo:service interface="com.simon.dubbo.api.IUserService" ref="userService" />
+    <dubbo:service interface="com.simon.dubbo.api.IUserService" ref="userService" filter="monitor" />
     
     <context:component-scan base-package="com.simon.dubbo.api"/>
     
