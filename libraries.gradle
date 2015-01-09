@@ -1,5 +1,5 @@
 versions = [
-	spring:							'3.2.8.RELEASE',
+	spring:							'3.2.9.RELEASE',
 	spring_security:				'3.2.5.RELEASE',
 	jetty:							'8.1.10.v20130312',
 	jstl:							'1.2',

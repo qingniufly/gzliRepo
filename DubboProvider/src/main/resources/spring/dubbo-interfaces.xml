@@ -18,7 +18,8 @@
 <!--     <dubbo:registry address="${tfc.dubbo.zkurl}" /> -->
     <dubbo:registry address="zookeeper://127.0.0.1:2181" />
     
-    <dubbo:monitor protocol="registry" address="192.168.163.87:7070"/>
+<!--     <dubbo:monitor address="192.168.163.87:7070"/> -->
+    <dubbo:monitor protocol="registry" />
  
     <!-- 用dubbo协议在20880端口暴露服务 -->
 <!--     <dubbo:protocol name="dubbo" port="${tfc.dubbo.fin.port}" serialization="compareKryo"/> -->
@@ -29,7 +30,7 @@
 
     <!--需要暴露的service-->
 <!--     <dubbo:service interface="com.travelzen.tfc.fin.api.FinBpProductAttrService" ref="finBpProductAttrServiceImpl" /> -->
-    <dubbo:service interface="com.simon.dubbo.api.IUserService" ref="userService" filter="monitor" />
+    <dubbo:service interface="com.simon.dubbo.api.IUserService" ref="userService"/>
     
     <context:component-scan base-package="com.simon.dubbo.api"/>
     
