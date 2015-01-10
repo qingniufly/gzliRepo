@@ -44,7 +44,7 @@ public class CountDownLatchTest {
 				startSignal.await();
 				for (int i = beginIndex; i < beginIndex + 10; i++) {
 					System.out.println(i);
-					Thread.sleep(10 * 1000);
+					Thread.sleep(1 * 1000);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();

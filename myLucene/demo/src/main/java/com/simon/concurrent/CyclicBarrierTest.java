@@ -5,6 +5,7 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author  : simon
@@ -13,7 +14,7 @@ import java.util.concurrent.Executors;
  **/
 public class CyclicBarrierTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		final int n = 4;
 		ExecutorService executor = Executors.newCachedThreadPool();
 		final Random rand = new Random();
@@ -44,6 +45,9 @@ public class CyclicBarrierTest {
 		}
 
 		executor.shutdown();
+		executor.awaitTermination(5, TimeUnit.SECONDS);
+		executor.shutdownNow();
+		System.out.println("Done!");
 
 	}
 
