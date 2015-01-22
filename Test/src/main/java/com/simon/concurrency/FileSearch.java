@@ -55,12 +55,13 @@ public class FileSearch implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		FileSearch searcher = new FileSearch("/tmp", "calcState.log");
+//		FileSearch searcher = new FileSearch("/tmp", "calcState.log");
+		FileSearch searcher = new FileSearch("/home", "id_rsa");
 		Thread thread = new Thread(searcher);
 		thread.start();
 
 		try {
-			TimeUnit.SECONDS.sleep(10);
+			TimeUnit.SECONDS.sleep(10 * 60);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

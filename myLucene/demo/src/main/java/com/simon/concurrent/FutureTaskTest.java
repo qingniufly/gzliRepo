@@ -27,9 +27,10 @@ public class FutureTaskTest {
 		try {
 			executor.execute(task);
 			System.out.println("Main thread running...");
+//			executor.shutdownNow();
+			executor.shutdown();
 			String result = task.get();
 			System.out.printf("result:%s%n", result);
-			executor.shutdown();
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}

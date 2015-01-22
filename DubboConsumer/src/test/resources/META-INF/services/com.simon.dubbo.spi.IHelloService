@@ -1,0 +1,2 @@
+simple=com.simon.dubbo.spi.SimpleHelloService
+adaptive=com.simon.dubbo.spi.AdaptiveHelloService

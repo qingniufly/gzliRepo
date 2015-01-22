@@ -2,10 +2,10 @@ package com.simon.concurrent;
 
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author  : simon
@@ -16,6 +16,8 @@ public class CyclicBarrierTest {
 
 	public static void main(String[] args) throws InterruptedException {
 		final int n = 4;
+		final int t = n * 2;
+		final CountDownLatch cdl = new CountDownLatch(t);
 		ExecutorService executor = Executors.newCachedThreadPool();
 		final Random rand = new Random();
 		final CyclicBarrier barrier = new CyclicBarrier(n, new Runnable() {
@@ -26,7 +28,7 @@ public class CyclicBarrierTest {
 			}
 		});
 
-		for (int i = 0; i < n * 2; i++) {
+		for (int i = 0; i < t; i++) {
 			executor.execute(new Runnable() {
 
 				@Override
@@ -39,14 +41,14 @@ public class CyclicBarrierTest {
 						e.printStackTrace();
 					} catch (BrokenBarrierException e) {
 						e.printStackTrace();
+					} finally {
+						cdl.countDown();
 					}
 				}
 			});
 		}
 
-		executor.shutdown();
-		executor.awaitTermination(5, TimeUnit.SECONDS);
-		executor.shutdownNow();
+		cdl.await();
 		System.out.println("Done!");
 
 	}

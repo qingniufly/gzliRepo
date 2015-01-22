@@ -80,7 +80,9 @@ public class SemaphoreTest {
 
 		public void add(T o) throws InterruptedException {
 			semaphore.acquire();
-			this.set.add(o);
+			if (!this.set.add(o) ) {
+				semaphore.release();
+			}
 			System.out.printf("add:%s%n", o);
 		}
 

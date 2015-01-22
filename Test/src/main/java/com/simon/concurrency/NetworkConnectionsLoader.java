@@ -30,9 +30,7 @@ public class NetworkConnectionsLoader implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.printf("Main: Configuration has been loaded: %s\n",
-				new Date());
-		System.out.println("Total used time is "
-				+ (System.currentTimeMillis() - start) / 1000 + "s");
+		System.out.printf("Main: Configuration has been loaded: %s\n", new Date());
+		System.out.println("Total used time is " + (System.currentTimeMillis() - start) / 1000 + "s");
 	}
 }
