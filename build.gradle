@@ -142,10 +142,10 @@ allprojects {
             repositories {
                 mavenDeployer {
                     repository(url: 'http://192.168.160.187:8081/nexus/content/repositories/releases') {
-                        authentication(userName: mavenUser, password: mavenPassword)
+                    //    authentication(userName: mavenUser, password: mavenPassword)
                     }
                     snapshotRepository(url: 'http://192.168.160.187:8081/nexus/content/repositories/snapshots') {
-                        authentication(userName: mavenUser, password: mavenPassword)
+                    //    authentication(userName: mavenUser, password: mavenPassword)
                     }
             	}
             }
