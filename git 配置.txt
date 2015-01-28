@@ -1,13 +1,13 @@
-ÉèÖÃÓÃ»§¡¢ÓÊÏä
+ï»¿è®¾ç½®ç”¨æˆ·ã€é‚®ç®±
 git config --global user.name "simon.li"
 git config --global user.email muzilimeng06@163.com
 
-git ÉèÖÃ±£´æµÄÎ»ÖÃ
+git è®¾ç½®ä¿å­˜çš„ä½ç½®
 --system	/etc/gitconfig
 --global	~/.gitconfig
 local	repository/.git/config
 
-¢ÙÅäÖÃÃüÁî±ğÃû
+â‘ é…ç½®å‘½ä»¤åˆ«å
 git config --global alias.cf config
 git config --global alias.st status
 git config --global alias.co checkout
@@ -18,19 +18,19 @@ git config --global alias.dt difftool
 git config --global alias.mt mergetool
 git config --global alias.last log -l HEAD
 
-¢ÚÉèÖÃ±à¼­Æ÷
+â‘¡è®¾ç½®ç¼–è¾‘å™¨
 git config core.editor vim
 
-¢ÛÉ«²Ê
+â‘¢è‰²å½©
 git config --global color.ui true
 
-¢ÜÏÔÊ¾ÀúÊ·¼ÇÂ¼Ê±£¬Ã¿¸öÌá½»µÄĞÅÏ¢Ö»ÏÔÊ¾Ò»ĞĞ
+â‘£æ˜¾ç¤ºå†å²è®°å½•æ—¶ï¼Œæ¯ä¸ªæäº¤çš„ä¿¡æ¯åªæ˜¾ç¤ºä¸€è¡Œ
 git config format.pretty oneline
 
-¢İls -l ÏÔÊ¾ÎÄ¼şÁĞ±í
+â‘¤ls -l æ˜¾ç¤ºæ–‡ä»¶åˆ—è¡¨
 git config --global gui.encoding utf-8
 git config --global i18n.commitencoding gbk
 git config --global svn.pathnameencoding gbk
 
-¢Şgit statusÊ±ÖĞÎÄÂÒÂëÎÊÌâ
+â‘¥git statusæ—¶ä¸­æ–‡ä¹±ç é—®é¢˜
 git config --global core.quotepath false
