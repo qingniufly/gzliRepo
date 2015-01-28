@@ -1,0 +1,36 @@
+设置用户、邮箱
+git config --global user.name "simon.li"
+git config --global user.email muzilimeng06@163.com
+
+git 设置保存的位置
+--system	/etc/gitconfig
+--global	~/.gitconfig
+local	repository/.git/config
+
+①配置命令别名
+git config --global alias.cf config
+git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.mg merge
+git config --global alias.ci commit -s
+git config --global alias.dt difftool
+git config --global alias.mt mergetool
+git config --global alias.last log -l HEAD
+
+②设置编辑器
+git config core.editor vim
+
+③色彩
+git config --global color.ui true
+
+④显示历史记录时，每个提交的信息只显示一行
+git config format.pretty oneline
+
+⑤ls -l 显示文件列表
+git config --global gui.encoding utf-8
+git config --global i18n.commitencoding gbk
+git config --global svn.pathnameencoding gbk
+
+⑥git status时中文乱码问题
+git config --global core.quotepath false
