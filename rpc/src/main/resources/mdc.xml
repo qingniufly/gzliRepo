@@ -1,0 +1,11 @@
+<configuration>
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <layout>
+      <Pattern>%-4r [%thread] %-5level C:%X{client} N:%X{number} - %msg%n</Pattern>
+    </layout>       
+  </appender>
+  
+  <root level="debug">
+    <appender-ref ref="CONSOLE"/>
+  </root>  
+</configuration>
