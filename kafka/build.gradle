@@ -1,0 +1,4 @@
+dependencies {
+    compile libraries.kafka
+	compile 'org.apache.kafka:kafka-examples:0.8.2-beta'
+}

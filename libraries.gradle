@@ -145,6 +145,7 @@ libraries = [
 	jta:					'javax.transaction:javax.transaction-api:1.2',
 
 	/* K */
+	kafka:					'org.apache.kafka:kafka_2.10:0.8.2-beta',
 	
 	/* L */
 
