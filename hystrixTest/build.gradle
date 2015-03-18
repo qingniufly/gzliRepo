@@ -1,0 +1,4 @@
+dependencies {
+    compile 'com.netflix.hystrix:hystrix-core:1.4.0'
+
+}
