@@ -1,0 +1,5 @@
+apply plugin : 'scala'
+dependencies {
+    compile 'io.reactivex:rxjava:1.0.8'
+	compile libraries.junit
+}
