@@ -10,3 +10,7 @@ target/
 */bin/
 */temp/
 */www*
+*.classpath
+*.project
+*.cache
+*.settings/
