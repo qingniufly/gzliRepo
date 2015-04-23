@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<project name ="javacTest" default="compile" basedir=".">
+    <target name="clean">
+        <delete dir="${basedir}/build"/>
+    </target>
+    <target name="compile"  depends ="clean">
+        <mkdir dir ="${basedir}/build/classes"/>
+        <javac srcdir ="${basedir}/src" destdir ="${basedir}/build/classes"/>
+    </target>
+</project>

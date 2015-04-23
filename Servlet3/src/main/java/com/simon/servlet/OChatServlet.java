@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 @WebServlet(urlPatterns = "/ochat", asyncSupported = true)
-public class OChatServlet extends HttpServlet{
+public class OChatServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -277914015930424042L;
 
@@ -64,8 +64,7 @@ public class OChatServlet extends HttpServlet{
 
 						try {
 
-							sendMessage(asyncContext.getResponse().getWriter(),
-									message);
+							sendMessage(asyncContext.getResponse().getWriter(), message);
 
 						} catch (Exception e) {
 
@@ -87,8 +86,7 @@ public class OChatServlet extends HttpServlet{
 
 	});
 
-	private void sendMessage(PrintWriter writer, String message)
-			throws IOException {
+	private void sendMessage(PrintWriter writer, String message) throws IOException {
 
 		// default message format is message-size ; message-data ;
 		System.out.println(message);
@@ -117,8 +115,7 @@ public class OChatServlet extends HttpServlet{
 	// GET method is used to establish a stream connection
 
 	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
 	throws ServletException, IOException {
 
@@ -189,15 +186,13 @@ public class OChatServlet extends HttpServlet{
 	// POST method is used to communicate with the server
 
 	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 
 	throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
 
-		AsyncContext ac = asyncContexts
-				.get(request.getParameter("metadata.id"));
+		AsyncContext ac = asyncContexts.get(request.getParameter("metadata.id"));
 
 		if (ac == null) {
 

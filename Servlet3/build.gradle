@@ -1,12 +1,21 @@
 apply plugin: 'war'
 
+sourceSets.main.resources.srcDirs = ["src/main/resources"] 
+
 dependencies {
 	compile libraries.slf4j_api
 	compile libraries.jcl_over_slf4j
 //	compile libraries.slf4j_nop
 	compile libraries.logback
 	compile libraries.gson
-	compile libraries.servlet_api
+	provided libraries.servlet_api
 	compile libraries.json_lib
 	compile libraries.commons_lang
+	compile 'nl.justobjects:pushlet:2.0.4'
+	
+	
+	compile 'org.apache.tomcat.embed:tomcat-embed-core:8.0.21'
+	
+	compile 'org.eclipse.jetty:jetty-eventsource-servlet:1.0.0'
+	
 }

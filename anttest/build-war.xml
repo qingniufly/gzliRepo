@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<project name ="javacTest" default="war" basedir=".">
+    <property name="build" value="${basedir}/build"/>
+    <property name="classes" value="${basedir}/build/classes"/>
+    <property name="lib" value="${basedir}/WebContent/WEB-INF/lib"/>
+    <property name="target" value="${basedir}/target"/>
+    <target name="clean">
+        <delete dir="${build}"/>
+        <delete dir="${target}"/>
+    </target>
+    <target name="compile"  depends ="clean">
+        <mkdir dir ="${classes}"/>
+        <javac srcdir ="${basedir}/src" destdir ="${classes}"/>
+    </target>
+    <target name="war" depends="compile">
+	<war destfile="${target}/hello.war" webxml="${basedir}/WebContent/WEB-INF/web.xml">
+	    <fileset dir="${basedir}/WebContent" includes="**/*.jsp"/>
+	    <lib dir="${lib}"/>
+	    <classes dir="${classes}"/>
+	</war>
+    </target>
+</project>

@@ -1,0 +1,16 @@
+<html>
+<head>
+<script type="text/javascript" src="js/ajax-pushlet-client.js"></script>
+<script type="text/javascript">
+	PL._init();
+	PL.joinListen('blog_event');
+	function onData(event) {
+		alert(event.get("blog_name"));
+	}
+</script>
+</head>
+<body>
+	This is pushlet 'Hello, World' page....
+	<br>
+</body>
+</html>

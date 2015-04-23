@@ -1,0 +1,43 @@
+<html>
+  <head>
+  	<script type="text/javascript" src="js/jquery-2.0.3.min.js" ></script>
+    <script language="Javascript">
+      function printTime(time) {
+         document.getElementById('text').innerHTML = time; 
+      }
+      
+      function ajax(url, vars, callbackFunction) {
+    	  var request =  new XMLHttpRequest();
+    	  request.open("POST", url, true);
+    	  request.setRequestHeader("Content-Type",
+    	                           "application/x-javascript;");
+    	 
+    	  request.onreadystatechange = function() {
+    	    if (request.readyState == 4 && request.status == 200) {
+    	      if (request.responseText) {
+    	        callbackFunction(request.responseText);
+    	      }
+    	    }
+    	  };
+    	  request.send(vars);
+    	}
+      
+      function sendQ(url, vars, callbackFunction) {
+    	  $.ajax({
+    		  type : 'POST',
+    		  url : url,
+    		  data : vars,
+    		  success : callbackFunction,
+    		  dataType : 'script'
+    	  });
+      }
+      
+    </script>
+  </head> 
+
+  <body>
+    
+    <a href ="javascript:sendQ('ptime', '', printTime)" />start timer</a>
+    <p id="text">0</p>
+  </body>
+</html>

@@ -4,11 +4,12 @@
 	<comment/>
 	<projects/>
 	<natures>
+		<nature>org.scala-ide.sdt.core.scalanature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
 	<buildSpec>
 		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
+			<name>org.scala-ide.sdt.core.scalabuilder</name>
 			<arguments/>
 		</buildCommand>
 	</buildSpec>

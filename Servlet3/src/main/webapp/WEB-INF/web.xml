@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	
+<!-- 	<filter> -->
+<!-- 		<filter-name>continuation</filter-name> -->
+<!-- 		<filter-class>org.eclipse.jetty.continuation.ContinuationFilter</filter-class> -->
+<!-- 	</filter> -->
+	
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>continuation</filter-name> -->
+<!-- 		<url-pattern>/see/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+	
+	<servlet>
+		<description></description>
+		<servlet-name>foreverFrameTomcatServlet</servlet-name>
+		<servlet-class>com.simon.servlet.tomcat.comet.ForeverFrameTomcatServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>foreverFrameTomcatServlet</servlet-name>
+		<url-pattern>/time</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description></description>
+		<servlet-name>foreverFrameTomcatPlainServlet</servlet-name>
+		<servlet-class>com.simon.servlet.tomcat.comet.ForeverFrameTomcatPlainServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>foreverFrameTomcatPlainServlet</servlet-name>
+		<url-pattern>/ptime</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>movementServlet</servlet-name>
+		<servlet-class>com.simon.servlet.server.send.event.ServerSendEventServlet</servlet-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>heartBeatPeriod</param-name>
+			<param-value>2</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>movementServlet</servlet-name>
+		<url-pattern>/see/movement</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>

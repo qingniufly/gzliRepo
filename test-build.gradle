@@ -1,0 +1,24 @@
+class Generate extends DefaultTask {
+    @Input
+    int fileCount = 10
+
+    @OutputDirectory
+    File generatedFileDir = project.file("${project.buildDir}/generated")
+    
+    @TaskAction
+    public void perform() {
+        for (int i = 0; i < fileCount; i++) {
+            new File(generatedFileDir, "${i}.txt").text = i
+        }
+    }
+
+}
+
+task generator(type: Generate) {
+    fileCount = 20
+}
+
+task zip(type: Zip) {
+    from generator
+}
+

@@ -3,6 +3,7 @@ package com.simon.lock;
 public class ObjectThread implements Runnable {
 
 	private LockTest lock;
+	@SuppressWarnings("unused")
 	private int n = 0;
 
 	public ObjectThread(LockTest lock, int n) {

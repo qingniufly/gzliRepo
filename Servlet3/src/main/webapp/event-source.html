@@ -1,0 +1,29 @@
+<html>
+<head>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js" ></script>
+<script language="Javascript">
+	if (typeof (EventSource) !== "undefined") {
+		// Yes! Server-sent events support!
+		console.log('EventSource supported!');
+	} else {
+		// Sorry! No server-sent events support..
+		console.error('EventSource not supported!');
+	}
+	var es = new EventSource("see/movement");
+	es.addEventListener('message', function(e) {
+		var pos = e.data.split(','), x = pos[0], y = pos[1];
+		$('#box').css({
+			left : x + 'px',
+			top : y + 'px'
+		});
+		$('#box span').html(x + '---' + y);
+	});
+</script>
+</head>
+
+<body>
+	<a href="time" target="iframe" />start timer
+	</a>
+	<div id="box" style="background-color: red"><span style="color:blue;">111 333</span></div>
+</body>
+</html>

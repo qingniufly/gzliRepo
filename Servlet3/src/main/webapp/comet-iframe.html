@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <script language="Javascript">
+      function printTime(time) {
+         document.getElementById('text').innerHTML = time; 
+      }
+      function setIframeSrc() {
+	      document.getElementById('iframe').src = 'time';
+      }
+    </script>
+  </head> 
+
+  <body onload="setIframeSrc();">
+     
+    <iframe id="iframe" name="iframe" width ="0" height ="0" border="0">
+    </iframe>
+    <a href ="time" target="iframe"/>start timer</a>
+    <p id="text">0</p>
+  </body>
+</html>

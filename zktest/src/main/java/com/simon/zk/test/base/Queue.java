@@ -2,7 +2,9 @@ package com.simon.zk.test.base;
 
 import java.nio.ByteBuffer;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
@@ -11,10 +13,18 @@ import org.apache.zookeeper.data.Stat;
 
 public class Queue extends SyncPrimitive {
 
+	private static int DEFAULT_QUEUE_SIZE = Integer.MAX_VALUE;
+
+	private int queueSize;
+
 	public Queue(String address, String name) {
+		this(address, name, DEFAULT_QUEUE_SIZE);
+	}
+
+	public Queue(String address, String name, int queueSize) {
 		super(address);
 		this.root = name;
-		
+		this.queueSize = queueSize;
 		// Create ZK node name
 		if (zk != null) {
 			try {
@@ -30,9 +40,10 @@ public class Queue extends SyncPrimitive {
 			}
 		}
 	}
-	
+
 	/**
 	 * Add element to the queue
+	 * 
 	 * @param i
 	 * @return
 	 * @throws KeeperException
@@ -42,10 +53,20 @@ public class Queue extends SyncPrimitive {
 		ByteBuffer b = ByteBuffer.allocate(4);
 		b.putInt(i);
 		byte[] value = b.array();
-		zk.create(root + "/element", value, Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
-		return true;
+		while (true) {
+			synchronized (mutex) {
+				List<String> list = zk.getChildren(root, true);
+				if (list.size() >= queueSize) {
+					System.out.println("Queue full! Going to wait");
+					mutex.wait();
+				} else {
+					zk.create(root + "/element", value, Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
+					return true;
+				}
+			}
+		}
 	}
-	
+
 	int consume() throws KeeperException, InterruptedException {
 		int retValue = -1;
 		Stat stat = null;
@@ -76,33 +97,61 @@ public class Queue extends SyncPrimitive {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args) throws InterruptedException {
-		Queue q = new Queue("127.0.0.1:2181", "/app1");
-		int max = 10;
+		final Queue q = new Queue("127.0.0.1:2181", "/app1", 10);
 		System.out.println("Producer");
-		for (int i = 0; i < max; i++) {
-			try {
-				q.produce(i + 10);
-			} catch (KeeperException | InterruptedException e) {
-				e.printStackTrace();
-			}
+
+		ExecutorService pes = Executors.newCachedThreadPool();
+
+		for (int i = 1; i <= 50; i++) {
+			final Random r = new Random();
+			final int ti = r.nextInt(i);
+			pes.submit(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						q.produce(ti);
+					} catch (KeeperException | InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		}
-		
-		TimeUnit.SECONDS.sleep(10);
-		
+
+		ExecutorService ces = Executors.newCachedThreadPool();
+
 		System.out.println("Consumer");
-		for (int i = 0; i < max; i++) {
-//			try {
-//				int r = q.consume();
-//				System.out.println("Item: " + r);
-//			} catch (KeeperException e) {
-//				i--;
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+		for (int i = 0; i < 20; i++) {
+			ces.submit(new Runnable() {
+
+				@Override
+				public void run() {
+					try {
+						int r = q.consume();
+						System.out.println("Item: " + r);
+					} catch (KeeperException | InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+
 		}
-		
+
+		// TimeUnit.SECONDS.sleep(10);
+
+		// for (int i = 0; i < max; i++) {
+		// try {
+		// int r = q.consume();
+		// System.out.println("Item: " + r);
+		// } catch (KeeperException e) {
+		// i--;
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// }
+
 	}
 
 }

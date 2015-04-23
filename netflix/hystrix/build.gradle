@@ -1,5 +1,17 @@
+apply plugin: 'scala'
+
+sourceSets {
+	main {
+		scala { srcDirs = ['src/main/scala'] }
+	}
+	test {
+		scala { srcDirs = ['src/main/scala'] }
+	}
+}
+
 dependencies {
-    compile 'com.netflix.hystrix:hystrix-core:1.4.0'
+    compile 'com.netflix.hystrix:hystrix-core:1.4.3'
+	compile 'io.reactivex:rxscala_2.11:0.24.0'
 	compile libraries.logback
 	compile libraries.jcl_over_slf4j
 	compile libraries.junit

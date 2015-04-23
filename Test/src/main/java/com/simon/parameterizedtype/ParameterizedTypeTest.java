@@ -13,6 +13,7 @@ public class ParameterizedTypeTest<T> {
 		};
 		Type mySuperClass = ptt.getClass().getGenericSuperclass();
 		Type type = ((ParameterizedType)mySuperClass).getActualTypeArguments()[0];
+		System.out.println(type.getClass().getName());
         System.out.println((Class<?>)type);
 	}
 	

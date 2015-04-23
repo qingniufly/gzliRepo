@@ -8,7 +8,7 @@ public class WaitNotifyTest extends Thread {
 
 	final CountDownLatch latch;
 	
-	boolean stop = false;
+	volatile boolean stop = false;
 
 	ConcurrentLinkedQueue<Long> q = new ConcurrentLinkedQueue<Long>();
 

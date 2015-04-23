@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<project name ="antPro" default ="getBaseDir" basedir ="/work/gzliRepo/anttest">
+        <target  name="getBaseDir">
+               <echo message="The base dir is: ${basedir}"/>
+        </target>
+</project>
