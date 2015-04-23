@@ -51,6 +51,11 @@
 		<url-pattern>/see/movement</url-pattern>
 	</servlet-mapping>
 	
+	<resource-env-ref>
+		<resource-env-ref-name>concurrent/DefaultManagedExecutorService</resource-env-ref-name>
+		<resource-env-ref-type>javax.enterprise.concurrent.ManagedSchedulerExecutorService</resource-env-ref-type>
+	</resource-env-ref>
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

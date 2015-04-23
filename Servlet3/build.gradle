@@ -9,6 +9,8 @@ dependencies {
 	compile libraries.logback
 	compile libraries.gson
 	provided libraries.servlet_api
+	compile 'javax:javaee-api:7.0'
+	compile 'javax.enterprise.concurrent:javax.enterprise.concurrent-api:1.0'
 	compile libraries.json_lib
 	compile libraries.commons_lang
 	compile 'nl.justobjects:pushlet:2.0.4'
