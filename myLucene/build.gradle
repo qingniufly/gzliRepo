@@ -1,4 +1,4 @@
-﻿apply from: 'libraries.gradle'
+apply from: 'libraries.gradle'
 group = 'com.travelzen'
 version = '1.0'
 

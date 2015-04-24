@@ -1,0 +1,26 @@
+apply plugin : 'scala'
+
+//sourceSets.main {
+//    scala {
+//    	srcDir 'src/main/scala'
+//    }
+//    resources {
+//    	srcDir 'src/main/resources'
+//    }
+//}
+
+sourceSets.main.scala.srcDirs = ["src/main/scala"]
+sourceSets.main.resources.srcDirs = ["src/main/resources"]
+
+dependencies {
+
+	// for jetty.servlet.orbit cannot be read problem
+	compile module('org.apache.spark:spark-core_2.11:1.3.1') {
+		dependencies(
+			"org.eclipse.jetty.orbit:javax.servlet:3.0.0.v201112011016@jar",
+			"org.eclipse.jetty:jetty-continuation:8.1.2.v20120308",
+			"org.eclipse.jetty:jetty-http:8.1.2.v20120308"
+		)
+	}
+
+}
