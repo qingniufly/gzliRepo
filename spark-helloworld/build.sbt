@@ -6,7 +6,9 @@ version := "0.0.1-SNAPSHOT"
 
 scalaVersion :="2.11.6"
 
-// EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource
+EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource
+
+// classpathTypes += "orbit"
 
 libraryDependencies ++= Seq(
     "org.json4s" %% "json4s-native" % "3.2.10",
@@ -24,7 +26,7 @@ resolvers ++= Seq(
       "JBoss Repository"     at "https://repository.jboss.org/nexus/content/repositories/releases/",  
       "MQTT Repository"      at "https://repo.eclipse.org/content/repositories/paho-releases/",  
       "Cloudera Repository"  at "http://repository.cloudera.com/artifactory/cloudera-repos/",  
-	  "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository",
+	  // "Local Maven Repository" at ""+Path.userHome.asFile.toURI.toURL+"/.m2/repository",
       // For Sonatype publishing  
       // "sonatype-snapshots"   at "https://oss.sonatype.org/content/repositories/snapshots",  
       // "sonatype-staging"     at "https://oss.sonatype.org/service/local/staging/deploy/maven2/",  
