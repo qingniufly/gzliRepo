@@ -1,0 +1,15 @@
+digraph configurations {
+rankdir=BT;
+archives [shape=box];
+compile [shape=box];
+default [shape=box];
+default -> runtime;
+provided [shape=box];
+runtime [shape=box];
+runtime -> compile;
+testCompile [shape=box];
+testCompile -> compile;
+testRuntime [shape=box];
+testRuntime -> testCompile;
+testRuntime -> runtime;
+}

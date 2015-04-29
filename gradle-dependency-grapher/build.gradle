@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        jcenter()
+	mavenLocal()
+    }
+    dependencies {
+        classpath "nu.studer:gradle-plugindev-plugin:1.0.3"
+        classpath "org.codehaus.groovy:groovy-backports-compat23:2.4.0"
+        classpath "net.researchgate:gradle-release:2.0.1"
+    }
+}
+
+apply plugin: "groovy"
+apply plugin: "idea"
+apply plugin: "nu.studer.plugindev"
+apply plugin: "net.researchgate.release"
+
+group = "com.github.nevers"
+
+plugindev {
+	pluginId "nevers.DependencyGrapher"
+	pluginName "DependencyGrapher"
+	pluginImplementationClass "DependencyGrapher"
+	pluginDescription "gradle-release is a plugin for providing a Maven-like release process to project using Gradle."
+	pluginLicenses "MIT"
+	pluginTags "gradle", "plugin", "dependency", "graph"
+	authorId "nevers"
+	authorName "Nick Evers"
+	projectUrl "http://github.com/nevers/gradle-dependency-grapher"
+	projectIssuesUrl "http://github.com/nevers/gradle-dependency-grapher"
+	projectVcsUrl "http://github.com/nevers/gradle-dependency-grapher"
+	projectInceptionYear "2015"
+	authorEmail = "332092070@qq.com"
+	done()
+}
+
+bintray {
+	user = project.hasProperty("bintrayUser") ? bintrayUser : ""
+	key = project.hasProperty("bintrayApiKey") ? bintrayApiKey : ""
+	pkg {
+		repo = "gradle-plugins"
+		userOrg = "researchgate"
+		version {
+			gpg {
+				sign = true
+				passphrase = project.hasProperty("bintrayGpgPassphrase") ? bintrayGpgPassphrase : ""
+			}
+		}
+	}
+    publish = true
+}
+
+wrapper.gradleVersion = "1.12"

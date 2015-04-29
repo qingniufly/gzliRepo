@@ -1,0 +1,22 @@
+digraph providedRuntime {
+graph[rankdir=BT,compound=true,nodesep=2,ranksep=1];
+subgraph cluster_providedRuntime {
+graph[rankdir=TB,style=dashed,label=providedRuntime,labelloc=b,labeljust=l,labelstyle=bold];
+providedRuntime [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"";
+}
+subgraph cluster_providedRuntime {
+graph[rankdir=TB,style=dashed,label=providedRuntime,labelloc=b,labeljust=l,labelstyle=bold];
+providedRuntime [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"";
+}
+providedRuntime -> providedCompile [ltail=cluster_providedRuntime,lhead=cluster_providedCompile];
+subgraph cluster_providedCompile {
+graph[rankdir=TB,style=dashed,label=providedCompile,labelloc=b,labeljust=l,labelstyle=bold];
+providedCompile [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"";
+}
+}

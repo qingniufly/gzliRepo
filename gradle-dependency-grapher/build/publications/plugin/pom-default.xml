@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.nevers</groupId>
+  <artifactId>gradle-dependency-grapher</artifactId>
+  <version>unspecified</version>
+  <name>DependencyGrapher</name>
+  <description>gradle-release is a plugin for providing a Maven-like release process to project using Gradle.</description>
+  <url>http://github.com/nevers/gradle-dependency-grapher</url>
+  <inceptionYear>2015</inceptionYear>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+  <scm>
+    <url>http://github.com/nevers/gradle-dependency-grapher</url>
+  </scm>
+  <developers>
+    <developer>
+      <id>nevers</id>
+      <name>Nick Evers</name>
+      <email>332092070@qq.com</email>
+    </developer>
+  </developers>
+</project>

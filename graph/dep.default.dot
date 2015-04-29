@@ -1,0 +1,29 @@
+digraph default {
+graph[rankdir=BT,compound=true,nodesep=2,ranksep=1];
+subgraph cluster_default {
+graph[rankdir=TB,style=dashed,label=default,labelloc=b,labeljust=l,labelstyle=bold];
+default [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"";
+}
+subgraph cluster_default {
+graph[rankdir=TB,style=dashed,label=default,labelloc=b,labeljust=l,labelstyle=bold];
+default [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"";
+}
+default -> runtime [ltail=cluster_default,lhead=cluster_runtime];
+subgraph cluster_runtime {
+graph[rankdir=TB,style=dashed,label=runtime,labelloc=b,labeljust=l,labelstyle=bold];
+runtime [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"";
+}
+runtime -> compile [ltail=cluster_runtime,lhead=cluster_compile];
+subgraph cluster_compile {
+graph[rankdir=TB,style=dashed,label=compile,labelloc=b,labeljust=l,labelstyle=bold];
+compile [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"org.apache.avro:avro:1.7.7\norg.apache.avro:avro-tools:1.7.7";
+}
+}

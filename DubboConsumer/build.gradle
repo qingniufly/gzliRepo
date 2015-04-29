@@ -1,4 +1,18 @@
+/*
+buildscript {
+    repositories {
+        maven {
+            url 'file:../local-repo'
+        }
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.simon.gradle:graphviz-gradle-plugin:0.0.1'
+    }
+}
+*/
 apply plugin: 'war'
+//apply plugin: 'dependenciesGraph'
 dependencies {
 
 	compile project(':DubboInterface')

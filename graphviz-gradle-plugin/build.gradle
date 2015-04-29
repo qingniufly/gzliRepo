@@ -1,0 +1,52 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+group = "com.simon.gradle"
+version = "0.0.1"
+archivesBaseName = 'graphviz-gradle-plugin'
+
+defaultTasks 'clean', 'jar'
+
+sourceSets {
+    main {
+        groovy {
+	    srcDirs = ["src/main/groovy", "src/main/java"]
+	}  // compile everything in src/ with groovy
+	java {
+	    srcDirs = []
+	}
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    tasks.withType(Compile) { options.encoding = "UTF-8" }
+    compile gradleApi()
+//    compile 'org.codehaus.groovy:groovy:2.3.0'
+    compile localGroovy()
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts { archives sourcesJar }
+
+// upload to repository
+uploadArchives {
+    repositories.mavenDeployer { 
+//	repository (url: 'file:/home/simon/.m2/repository')
+	repository (url: 'http://192.168.160.187:8081/nexus/content/repositories/releases') {
+                    authentication(userName: mavenUser, password: mavenPassword)
+                }
+    }
+
+}
+

@@ -1,0 +1,15 @@
+digraph provided {
+graph[rankdir=BT,compound=true,nodesep=2,ranksep=1];
+subgraph cluster_provided {
+graph[rankdir=TB,style=dashed,label=provided,labelloc=b,labeljust=l,labelstyle=bold];
+provided [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"";
+}
+subgraph cluster_provided {
+graph[rankdir=TB,style=dashed,label=provided,labelloc=b,labeljust=l,labelstyle=bold];
+provided [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"";
+}
+}

@@ -1,0 +1,15 @@
+digraph compile {
+graph[rankdir=BT,compound=true,nodesep=2,ranksep=1];
+subgraph cluster_compile {
+graph[rankdir=TB,style=dashed,label=compile,labelloc=b,labeljust=l,labelstyle=bold];
+compile [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"org.apache.avro:avro:1.7.7\norg.apache.avro:avro-tools:1.7.7";
+}
+subgraph cluster_compile {
+graph[rankdir=TB,style=dashed,label=compile,labelloc=b,labeljust=l,labelstyle=bold];
+compile [shape=point,style=invis];
+node[color=none,shape=plaintext];
+"org.apache.avro:avro:1.7.7\norg.apache.avro:avro-tools:1.7.7";
+}
+}

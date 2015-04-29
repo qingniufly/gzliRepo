@@ -3,22 +3,35 @@ apply from: 'libraries.gradle'
 group = 'com.simon'
 version = '1.0'
 
+buildscript {
+    repositories {
+	mavenLocal()
+   }
+    dependencies {
+	classpath 'com.simon.gradle:graphviz-gradle-plugin:0.0.1'
+    }
+}
+
 allprojects {
 	apply plugin: 'java'
 	apply plugin: 'eclipse'
 	apply plugin: 'eclipse-wtp'
 	apply plugin: 'maven'
+	apply plugin: 'dependenciesGraph'
 
 	buildDir = 'target'
 	sourceCompatibility = '1.7'
 	targetCompatibility = '1.7'
+
+	group = 'com.simon'
+	version = '0.0.1'
 
 	repositories {
 		maven { url 'http://192.168.160.187:8081/nexus/content/groups/public' }
 		mavenCentral()
 		mavenLocal()
 	}
-
+	
 	eclipse {
 		classpath {
 			downloadSources=true
@@ -150,6 +163,51 @@ allprojects {
             	}
             }
     	}
+	
+
+	task showConfigurations << {
+		new File("graph/configurations.dot").withWriter { out ->
+			out.println "digraph configurations {"
+			out.println "rankdir=BT;"
+			configurations.all { con ->
+				out.println "${con.name} [shape=box];"
+				con.extendsFrom.each { ext ->
+					out.println "${con.name} -> ${ext.name};"
+				}
+			}
+		out.println "}"
+		}
+	}
+	
+	task showDependencies << {
+	configurations.all { con ->
+		new File("graph/dep.${con.name}.dot").withWriter { out ->
+				def showDeps = { Configuration c ->
+					out.println "subgraph cluster_${c.name} {"
+					out.println "graph[rankdir=TB,style=dashed,label=${c.name},labelloc=b,labeljust=l,labelstyle=bold];"
+					out.println "${c.name} [shape=point,style=invis];"
+					out.println "node[color=none,shape=plaintext];"
+					deps = c.dependencies.collect { dep ->
+						"${dep.group}:${dep.name}:${dep.version}"
+					}
+					out.println "\"" + deps.join("\\n") + "\";"
+					out.println "}"
+				}
+ 
+				out.println "digraph ${con.name} {"
+				out.println "graph[rankdir=BT,compound=true,nodesep=2,ranksep=1];"
+				showDeps con
+				con.hierarchy.each { hier ->
+					showDeps hier
+					hier.extendsFrom.each { ext ->
+						out.println "${hier.name} -> ${ext.name} [ltail=cluster_${hier.name},lhead=cluster_${ext.name}];"
+					}
+ 
+				}
+				out.println "}"
+			}
+		}
+	}	
 }
 
 

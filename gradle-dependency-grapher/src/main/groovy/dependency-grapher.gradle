@@ -1,0 +1,116 @@
+apply plugin: DependencyGrapher
+
+class DependencyGrapher implements Plugin<Project> {
+	def rootProject
+
+	void apply(Project project) {
+		rootProject = project.rootProject
+		project.task("dependenciesGraph") {
+			description = "Create a dependency graph for all projects using Graphviz."
+			group = "Dependency grapher"
+			doLast {
+				generateDependenciesGraph(project)
+			}
+		}
+	}
+
+	def generateDependenciesGraph(project) {
+		def graph = new GraphvizDigraph(rootProject.name)
+		rootProject.allprojects.each {
+			//TODO Make these configurations user-definable
+			addProjectDependencies(graph, it, "compile")
+			addProjectDependencies(graph, it, "sources")
+		}
+		graph.compile()
+	}
+
+	def addProjectDependencies(graph, project, configuration) {
+		addProjectToGraph(project, graph)
+		if(!hasProjectConfiguration(project, configuration))
+			return
+
+		def stack = getFirstLevelDependencies(project, configuration)
+
+		addFirstLevelDependenciesToGraph(stack, graph)	
+		addChildDependenciesToGraph(stack, graph)
+	}
+
+	def addProjectToGraph(project, graph) {
+		if(!project.group.isEmpty() && project.version != "unspecified")
+			graph.add("${project.group}:${project.name}:${project.version}")
+	}
+
+	def hasProjectConfiguration(project, configuration) {
+		project.configurations.collect{it.name}.contains(configuration)
+	}
+
+	def getFirstLevelDependencies(project, configuration) {
+		def dependencies = project.configurations[configuration].resolvedConfiguration.firstLevelModuleDependencies
+		dependencies = dependencies.findAll{isProjectDependency(it)}
+		dependencies = [] << dependencies
+		dependencies.flatten()
+	}
+
+	def addFirstLevelDependenciesToGraph(dependencies, graph) {
+		dependencies.each {dependency ->
+			dependency.parents.findAll{isProjectDependency(it)}.each {
+				graph.add(it, dependency)
+			}
+		}
+	}
+
+	def addChildDependenciesToGraph(stack, graph) {
+		while(!stack.isEmpty()) {
+			def dependency = stack.pop()
+
+			dependency.children.findAll{isProjectDependency(it)}.each {
+				graph.add(dependency, it)
+			}
+
+			if(!dependency.children.isEmpty())
+				stack.addAll(dependency.children)
+		}
+	}
+
+	def isProjectDependency(dependency) {
+		def projectNames = rootProject.allprojects.collect{it.name}
+		projectNames.contains(dependency.moduleName)
+	}
+
+
+}
+
+class GraphvizDigraph {
+	private def data = []
+	
+	def GraphvizDigraph(name) {
+		data << "digraph $name {" 
+		data << "node [shape=box];"
+	}
+
+	def add(node) {
+		node = node.replace(":", ":\n")
+		data << "\"$node\""
+	}
+
+	def add(left, right) {
+		left = left.name
+		right = right.name
+		left = left.replace(":", ":\n")
+		right = right.replace(":", ":\n")
+		data << "\"$left\" -> \"$right\""
+	}
+
+	def compile() {
+		data << "}"	
+		//TODO make this filename and type user definable.
+		def fileName = "dependencies.pdf"
+		def command = "dot -Tpdf -o $fileName"
+		def process = command.execute()
+		data = data.unique{a, b -> a <=> b}
+		data.each {process << "$it\n"}
+		process.getOut().close()
+		process.text.eachLine{println(it)}
+		println("Dependency graph was successfully written to $fileName")
+	}
+}

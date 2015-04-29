@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: DependencyGrapher
+Implementation-Version: unspecified
+Implementation-Vendor: Nick Evers
+Implementation-Website: http://github.com/nevers/gradle-dependency-gra
+ pher
+Build-Date: 2015-04-28
+Build-JDK: 1.7.0_76
+Build-Gradle: 1.12
+Build-PluginDevPlugin: 1.0.3
+

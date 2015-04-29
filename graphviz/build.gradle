@@ -1,0 +1,4 @@
+dependencies {
+    compile 'com.github.fracpete:graphviz-treevisualize-weka-package:2014.8.1'
+	compile 'org.kohsuke:graphviz-api:1.1'
+}
